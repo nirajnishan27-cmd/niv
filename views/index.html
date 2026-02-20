@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIVRRITII — 3bhk Villa, South Goa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --jungle: #0d2b1a;
+    --palm: #1a4a2e;
+    --leaf: #2d7a4a;
+    --lime: #5ab870;
+    --mint: #b8e8c8;
+    --sand: #f2e8d5;
+    --white: #fefdf8;
+    --gold: #d4a843;
+    --text: #0d1f12;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); overflow-x: hidden; cursor: none; }
+
+  /* CURSOR */
+  .cursor { width: 10px; height: 10px; background: var(--lime); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: difference; }
+  .cursor-ring { width: 36px; height: 36px; border: 1.5px solid var(--lime); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0.6; transition: transform 0.15s ease-out; }
+
+  /* FLOATING WHATSAPP */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+    width: 62px; height: 62px; background: #25D366; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 25px rgba(37,211,102,0.45); text-decoration: none;
+    animation: waPulse 2.5s ease-in-out infinite; transition: transform 0.3s;
+  }
+  .wa-float:hover { transform: scale(1.12); }
+  .wa-float svg { width: 30px; height: 30px; fill: white; }
+  .wa-tip { position: absolute; right: 72px; top: 50%; transform: translateY(-50%); background: var(--jungle); color: var(--white); padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.72rem; white-space: nowrap; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .wa-float:hover .wa-tip { opacity: 1; }
+  @keyframes waPulse {
+    0%,100% { box-shadow: 0 6px 25px rgba(37,211,102,0.45); }
+    50% { box-shadow: 0 6px 40px rgba(37,211,102,0.7), 0 0 0 12px rgba(37,211,102,0.1); }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    padding: 1.3rem 4rem; display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.4s;
+  }
+  nav.scrolled { background: rgba(13,43,26,0.96); backdrop-filter: blur(16px); padding: 0.9rem 4rem; box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: white; letter-spacing: 0.1em; text-decoration: none; line-height: 1; }
+  .nav-logo span { display: block; font-size: 0.55rem; font-weight: 300; letter-spacing: 0.3em; color: var(--gold); font-style: normal; font-family: 'DM Sans', sans-serif; margin-top: 1px; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-wa { display: flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.55rem 1.3rem; border-radius: 25px; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; text-decoration: none; transition: all 0.25s; box-shadow: 0 3px 15px rgba(37,211,102,0.35); }
+  .nav-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+  .nav-wa svg { width: 14px; height: 14px; fill: white; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: white; border-radius: 2px; }
+
+  /* HERO */
+  #hero { height: 100vh; position: relative; display: flex; align-items: center; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, rgba(13,43,26,0.78) 0%, rgba(13,43,26,0.28) 60%, rgba(13,43,26,0.65) 100%),
+    url('/images/hero.jpg') center/cover no-repeat;
+    animation: drift 25s ease-in-out infinite alternate;
+  }
+  @keyframes drift { from { transform: scale(1) translateX(0); } to { transform: scale(1.08) translateX(-20px); } }
+
+  /* SVG leaf decor */
+  .leaf-svg { position: absolute; pointer-events: none; z-index: 1; }
+  .leaf-tl { top: -60px; left: -70px; width: 450px; opacity: 0.2; animation: swayL 12s ease-in-out infinite; transform-origin: top left; }
+  .leaf-br { bottom: -70px; right: -50px; width: 380px; opacity: 0.16; animation: swayL 16s ease-in-out infinite reverse; transform-origin: bottom right; }
+  @keyframes swayL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
+
+  .hero-content { position: relative; z-index: 2; padding: 0 5rem; max-width: 780px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    border: 1px solid rgba(212,168,67,0.45); background: rgba(212,168,67,0.12);
+    color: var(--gold); padding: 0.4rem 1.1rem; border-radius: 30px;
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 1.6rem; backdrop-filter: blur(8px);
+    opacity: 0; animation: up 0.9s 0.3s both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(4.2rem, 10.5vw, 9rem);
+    font-weight: 700; line-height: 0.92; color: white; letter-spacing: -0.01em;
+    opacity: 0; animation: up 0.9s 0.5s both;
+  }
+  .hero-title .sub { font-style: italic; font-weight: 400; color: var(--mint); display: block; font-size: 0.52em; margin-top: 0.15em; letter-spacing: 0.04em; }
+  .hero-sub { font-size: 1.02rem; font-weight: 300; color: rgba(255,255,255,0.75); margin-top: 1.6rem; line-height: 1.75; max-width: 500px; opacity: 0; animation: up 0.9s 0.7s both; }
+  .hero-btns { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; opacity: 0; animation: up 0.9s 0.9s both; }
+  @keyframes up { from { opacity:0; transform: translateY(35px); } to { opacity:1; transform: translateY(0); } }
+
+  .btn-g { background: var(--leaf); color: white; padding: 0.95rem 2.2rem; border-radius: 6px; border: none; font-family: 'DM Sans',sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s; }
+  .btn-g:hover { background: var(--lime); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(45,122,74,0.4); }
+  .btn-wa { display: inline-flex; align-items: center; gap: 0.6rem; background: #25D366; color: white; padding: 0.95rem 2.2rem; border-radius: 6px; font-family: 'DM Sans',sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; text-decoration: none; transition: all 0.3s; box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
+  .btn-wa:hover { background: #1ebe5d; transform: translateY(-3px); }
+  .btn-wa svg { width: 18px; height: 18px; fill: white; }
+
+  .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.45); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; z-index: 2; }
+  .s-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent); animation: drop 2.2s ease-in-out infinite; }
+  @keyframes drop { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  /* STATS */
+  .stats { background: var(--jungle); display: grid; grid-template-columns: repeat(4,1fr); }
+  .stat { padding: 2.2rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+  .stat:last-child { border: none; }
+  .stat-n { font-family: 'Playfair Display',serif; font-size: 2.6rem; color: var(--gold); display: block; line-height: 1; }
+  .stat-l { font-size: 0.67rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 0.4rem; }
+
+  /* SHARED */
+  .wrap { padding: 7rem 4rem; }
+  .tag { font-size: 0.67rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--leaf); font-weight: 500; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+  .tag::before { content: ''; width: 24px; height: 1.5px; background: var(--leaf); flex-shrink: 0; }
+  .h2 { font-family: 'Playfair Display',serif; font-size: clamp(2.2rem,4.5vw,3.8rem); font-weight: 400; line-height: 1.15; color: var(--jungle); }
+  .h2 em { font-style: italic; color: var(--leaf); }
+  .gline { width: 48px; height: 3px; background: var(--gold); margin: 1.5rem 0; border-radius: 2px; }
+  .btext { font-size: 0.96rem; line-height: 1.85; color: #3d4f3a; font-weight: 300; max-width: 540px; }
+
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-g { display: grid; grid-template-columns: 1.1fr 1fr; gap: 6rem; align-items: center; }
+  .about-imgs { position: relative; height: 580px; }
+  .a-main { position: absolute; top: 0; left: 0; width: 80%; height: 82%; object-fit: cover; border-radius: 8px 8px 70px 8px; box-shadow: 16px 20px 60px rgba(13,43,26,0.2); }
+  .a-sub { position: absolute; bottom: 0; right: 0; width: 52%; height: 46%; object-fit: cover; border-radius: 8px 70px 8px 8px; box-shadow: 8px 12px 35px rgba(13,43,26,0.22); border: 5px solid var(--white); }
+  .a-badge { position: absolute; top: 44%; left: 62%; transform: translateY(-50%); width: 110px; height: 110px; border-radius: 50%; background: var(--jungle); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(13,43,26,0.35); z-index: 2; }
+  .a-badge .n { font-family: 'Playfair Display',serif; font-size: 2.2rem; color: var(--gold); line-height: 1; }
+  .a-badge .l { font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-top: 2px; text-align: center; }
+  .leaf-bg { position: absolute; bottom: -30px; left: -30px; font-size: 6rem; opacity: 0.1; z-index: 0; transform: rotate(-30deg); animation: swayL 10s ease-in-out infinite; }
+  .feat-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.65rem; }
+  .feat-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; color: #3d4f3a; }
+  .feat-list li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; flex-shrink: 0; }
+
+  /* AMENITIES */
+  #amenities { background: var(--sand); }
+  .am-intro { text-align: center; margin-bottom: 4rem; }
+  .am-intro .gline { margin: 1.5rem auto; }
+  .am-intro .tag { justify-content: center; }
+  .am-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+  .am-card { background: var(--white); padding: 2.2rem 1.5rem; border-radius: 14px; text-align: center; transition: all 0.35s; border: 1px solid rgba(45,122,74,0.1); position: relative; overflow: hidden; }
+  .am-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg,var(--leaf),var(--gold)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+  .am-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(13,43,26,0.12); }
+  .am-card:hover::after { transform: scaleX(1); }
+  .am-icon { font-size: 2.2rem; margin-bottom: 0.9rem; display: block; }
+  .am-name { font-family: 'Playfair Display',serif; font-size: 1rem; color: var(--jungle); margin-bottom: 0.4rem; }
+  .am-desc { font-size: 0.76rem; color: #6a7d64; line-height: 1.6; }
+
+  /* GALLERY */
+  #gallery { background: var(--jungle); padding: 7rem 4rem; }
+  #gallery .tag { color: var(--mint); }
+  #gallery .tag::before { background: var(--mint); }
+  #gallery .h2 { color: white; }
+  #gallery .h2 em { color: var(--mint); }
+  .gal-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .gal-grid { display: grid; grid-template-columns: 2.2fr 1fr 1fr; grid-template-rows: 300px 300px; gap: 12px; }
+  .gal-item { overflow: hidden; border-radius: 12px; position: relative; cursor: pointer; }
+  .gal-item:first-child { grid-row: 1/3; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .gal-item:hover img { transform: scale(1.08); }
+  .gal-item::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(13,43,26,0.7) 0%, transparent 50%); opacity: 0; transition: opacity 0.4s; }
+  .gal-item:hover::before { opacity: 1; }
+  .gal-lbl { position: absolute; bottom: 1.2rem; left: 1.2rem; z-index: 2; font-family: 'Playfair Display',serif; font-style: italic; color: white; font-size: 1rem; opacity: 0; transform: translateY(8px); transition: all 0.4s; }
+  .gal-item:hover .gal-lbl { opacity: 1; transform: translateY(0); }
+
+  /* BOOKING */
+  #booking { background: var(--white); }
+  .bk-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+  .wa-block { background: linear-gradient(135deg,var(--jungle),var(--palm)); border-radius: 16px; padding: 2.5rem; color: white; margin-bottom: 2rem; position: relative; overflow: hidden; }
+  .wa-block::before { content: '🌴'; position: absolute; right: 1.5rem; top: 0.5rem; font-size: 5rem; opacity: 0.1; }
+  .wa-block h3 { font-family: 'Playfair Display',serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .wa-block p { font-size: 0.84rem; opacity: 0.72; margin-bottom: 1.5rem; line-height: 1.65; }
+  .wa-big { display: inline-flex; align-items: center; gap: 0.8rem; background: #25D366; color: white; padding: 1rem 2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-decoration: none; transition: all 0.3s; box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+  .wa-big svg { width: 22px; height: 22px; fill: white; }
+  .wa-big:hover { background: #1ebe5d; transform: translateY(-2px); }
+  .wa-num { font-size: 0.77rem; opacity: 0.5; margin-top: 0.8rem; }
+  .price-box { border: 1px solid rgba(45,122,74,0.2); border-radius: 12px; overflow: hidden; }
+  .price-hd { background: var(--sand); padding: 1rem 1.5rem; font-family: 'Playfair Display',serif; font-size: 1rem; color: var(--jungle); }
+  .prow { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.5rem; border-bottom: 1px solid rgba(45,122,74,0.1); font-size: 0.85rem; }
+  .prow:last-child { border: none; }
+  .pamount { font-family: 'Playfair Display',serif; font-size: 1.1rem; color: var(--leaf); }
+  .bk-form { background: var(--sand); padding: 2.5rem; border-radius: 16px; }
+  .bk-form h3 { font-family: 'Playfair Display',serif; font-size: 1.3rem; color: var(--jungle); margin-bottom: 1.5rem; }
+  .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .fg { margin-bottom: 1.1rem; }
+  .fg label { display: block; font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--leaf); font-weight: 500; margin-bottom: 0.45rem; }
+  .fg input, .fg select, .fg textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid rgba(45,122,74,0.25); border-radius: 6px; background: var(--white); font-family: 'DM Sans',sans-serif; font-size: 0.9rem; color: var(--text); transition: all 0.25s; -webkit-appearance: none; }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { outline: none; border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(45,122,74,0.1); }
+  .fg textarea { resize: vertical; min-height: 90px; }
+  .btn-send { width: 100%; background: var(--jungle); color: white; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-family: 'DM Sans',sans-serif; font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; transition: all 0.3s; margin-top: 0.4rem; }
+  .btn-send:hover { background: var(--palm); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(13,43,26,0.25); }
+  #form-msg { display:none; padding:0.8rem 1rem; border-radius:6px; margin-bottom:0.8rem; font-size:0.85rem; }
+
+  /* MAP */
+  #map-section { background: var(--sand); padding: 7rem 4rem; }
+  .map-g { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+  .map-facts { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.85rem; }
+  .mfact { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; color: #3d4f3a; }
+  .mfact-i { font-size: 1.1rem; width: 28px; text-align: center; }
+  .map-frame { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(13,43,26,0.18); height: 450px; }
+  .map-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+  .wa-dir { display: inline-flex; align-items: center; gap: 0.6rem; background: #25D366; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-decoration: none; transition: all 0.3s; }
+  .wa-dir:hover { background: #1ebe5d; transform: translateY(-2px); }
+  .wa-dir svg { width: 17px; height: 17px; fill: white; }
+
+  /* FOOTER */
+  footer { background: var(--jungle); padding: 4rem; }
+  .ft { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .ft-brand .logo { font-family: 'Playfair Display',serif; font-size: 2rem; font-weight: 700; color: white; letter-spacing: 0.1em; }
+  .ft-brand .logo span { display: block; font-size: 0.55rem; font-weight: 300; letter-spacing: 0.28em; color: var(--gold); font-style: normal; font-family: 'DM Sans',sans-serif; margin-top: -2px; }
+  .ft-brand p { font-size: 0.83rem; color: rgba(255,255,255,0.45); margin-top: 1rem; line-height: 1.7; max-width: 280px; }
+  .ft-col h5 { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .ft-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.84rem; margin-bottom: 0.65rem; transition: color 0.2s; }
+  .ft-col a:hover { color: var(--mint); }
+  .ft-bot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; font-size: 0.72rem; color: rgba(255,255,255,0.28); }
+
+  /* REVEAL */
+  .rev { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .rev-l { opacity: 0; transform: translateX(-30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .rev-r { opacity: 0; transform: translateX(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .in { opacity: 1; transform: translateX(0) translateY(0) !important; }
+
+  /* MOBILE */
+  @media (max-width: 960px) {
+    nav { padding: 1rem 1.5rem; }
+    nav.scrolled { padding: 0.8rem 1.5rem; }
+    .nav-links, .nav-wa { display: none; }
+    .hamburger { display: flex; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    .hero-content { padding: 0 1.5rem; }
+    .wrap, #gallery, #map-section, #amenities { padding: 5rem 1.5rem; }
+    .about-g, .bk-grid, .map-g { grid-template-columns: 1fr; gap: 3rem; }
+    .about-imgs { height: 400px; order: -1; }
+    .am-grid { grid-template-columns: repeat(2,1fr); }
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .gal-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3,220px); }
+    .gal-item:first-child { grid-row: auto; grid-column: 1/3; }
+    .ft { grid-template-columns: 1fr; gap: 2rem; }
+    footer { padding: 3rem 1.5rem; }
+    .frow { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 500px) {
+    .am-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 3.5rem; }
+    .stats { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<!-- FLOATING WHATSAPP -->
+<a class="wa-float" href="https://wa.me/917406012727?text=Hi!%20I'm%20interested%20in%20booking%20Villa%20NIVRRITII%20in%20South%20Goa." target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="wa-tip">Book on WhatsApp</span>
+</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">NIVRRITII <span>South Goa · Luxury Villa</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#map-section">Location</a></li>
+    <li><a href="#booking">Book</a></li>
+  </ul>
+  <a class="nav-wa" href="https://wa.me/917406012727?text=Hi!%20I'd%20like%20to%20book%20Villa%20NIVRRITII." target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp Us
+  </a>
+  <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <!-- Tropical SVG leaves -->
+  <svg class="leaf-svg leaf-tl" viewBox="0 0 450 450" fill="none">
+    <path d="M20 430 Q70 80 430 20 Q220 220 20 430Z" fill="#5ab870"/>
+    <path d="M20 430 Q110 160 370 60 Q190 250 20 430Z" fill="#2d7a4a" opacity="0.6"/>
+    <line x1="20" y1="430" x2="430" y2="20" stroke="#b8e8c8" stroke-width="1.5" opacity="0.5"/>
+  </svg>
+  <svg class="leaf-svg leaf-br" viewBox="0 0 380 380" fill="none">
+    <path d="M380 0 Q320 300 0 380 Q190 190 380 0Z" fill="#5ab870"/>
+    <path d="M380 0 Q290 260 20 340 Q210 170 380 0Z" fill="#2d7a4a" opacity="0.6"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">🌴 &nbsp;South Goa, India · Airbnb Superhost. . Guest Favroite</div>
+    <h1 class="hero-title">
+      NIVRRITII
+      <span class="sub">Where Goa breathes</span>
+    </h1>
+    <p class="hero-sub">A private jungle sanctuary nestled in the heart of South Goa — where palm canopies, warm breezes and the sound of the ocean become your daily reality.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-g">Explore & Book</a>
+      <a href="https://wa.me/917406012727?text=Hi!%20I'm%20interested%20in%20booking%20Villa%20NIVRRITII.%20Can%20you%20share%20availability?" target="_blank" class="btn-wa">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Instant Book: +91 74060 12727
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="s-line"></div></div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">3</span><span class="stat-l">Bedrooms</span></div>
+  <div class="stat"><span class="stat-n">8</span><span class="stat-l">Max Guests</span></div>
+  <div class="stat"><span class="stat-n">4.97★</span><span class="stat-l">Airbnb Rating</span></div>
+  <div class="stat"><span class="stat-n">2.5km</span><span class="stat-l">To Beach</span></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-g">
+      <div class="about-imgs rev-l">
+        <div class="leaf-bg">🌿</div>
+        <img class="a-main" src="/images/nivrritii/gallery-5.jpg" alt="Villa NIVRRITII" loading="lazy">
+        <img class="a-sub" src="/images/nivrritii/terrace.jpg" alt="Villa pool" loading="lazy">
+        <div class="a-badge"><span class="n">★</span><span class="l">Superhost<br>Verified</span></div>
+      </div>
+      <div class="rev-r">
+        <p class="tag">About Villa NIVRRITII</p>
+        <h2 class="h2">A Private Villa with Hills and <em>forest view</em></h2>
+        <div class="gline"></div>
+        <p class="btext">NIVRRITII — meaning serenity and liberation — is a lovingly crafted retreat tucked into the lush landscape of South Goa. Three spacious bedrooms,and sweeping tropical gardens make this more than a stay. It's a full sensory reset.</p>
+        <p class="btext" style="margin-top:1rem;">Minutes from pristine Palolem and Agonda beaches, NIVRRITII blends traditional Goan heritage with contemporary luxury — paradise with complete privacy.</p>
+        <ul class="feat-list">
+          <li>Private lush green garden</li>
+          <li>Private terrace & sun deck</li>
+          <li>3 en-suite bedrooms with king-size beds & A/C</li>
+          <li>Traditional Goan architecture, modern interiors</li>
+          <li>3 km from Palolem, 3 km from Agonda Beach</li>
+          <li>Optional private chef & 24*7caretaker available</li>
+        </ul>
+        <a href="https://wa.me/917406012727?text=Hi!%20I'd%20like%20to%20know%20more%20about%20Villa%20NIVRRITII." target="_blank" class="btn-g" style="margin-top:2.2rem;display:inline-block;">Enquire Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section id="amenities">
+  <div class="wrap">
+    <div class="am-intro rev">
+      <p class="tag">What We Offer</p>
+      <h2 class="h2">Curated <em>Comforts</em></h2>
+      <div class="gline"></div>
+    </div>
+    <div class="am-grid rev">
+      <div class="am-card"><span class="am-icon">🛏️</span><div class="am-name">3 Bedrooms</div><div class="am-desc">King beds, en-suite bathrooms and air conditioning throughout</div></div>
+      <div class="am-card"><span class="am-icon">🍽️</span><div class="am-name">Chef's Kitchen</div><div class="am-desc">Fully equipped + optional private chef service</div></div>
+      <div class="am-card"><span class="am-icon">📶</span><div class="am-name">High-Speed WiFi</div><div class="am-desc">115 Mbps fiber internet throughout the villa</div></div>
+      <div class="am-card"><span class="am-icon">🌿</span><div class="am-name">Tropical Garden</div><div class="am-desc">huge lush green garden with hammocks and outdoor dining</div></div>
+      <div class="am-card"><span class="am-icon">🚗</span><div class="am-name">Free Parking</div><div class="am-desc">Secure private parking for up to 4 vehicles</div></div>
+      <div class="am-card"><span class="am-icon">🏖️</span><div class="am-name">Beach Essentials</div><div class="am-desc">Towels, umbrellas, snorkels and bikes available</div></div>
+      
+      <div class="am-card"><span class="am-icon">🧘</span><div class="am-name">Yoga Deck</div><div class="am-desc">Open-air sunrise deck with mats and meditation space</div></div>
+      <div class="am-card"><span class="am-icon">🐾</span><div class="am-name">Pet Friendly</div><div class="am-desc">Well-behaved pets welcome — open garden and safe spaces for furry guests</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-top rev">
+    <div>
+      <p class="tag">Visual Tour</p>
+      <h2 class="h2">Every Corner, <em>Remembered</em></h2>
+    </div>
+    <a href="https://wa.me/917406012727?text=Hi!%20Can%20you%20share%20more%20photos%20of%20Villa%20NIVRRITII?" target="_blank" class="btn-g">Request More Photos</a>
+  </div>
+  <div class="gal-grid rev">
+    <div class="gal-item"><img src="/images/nivrritii/airnbnb_main.JPG" alt="" loading="lazy"><div class="gal-lbl">Terrace</div></div>
+    <div class="gal-item"><img src="/images/nivrritii/airnbnb_main.jpg" alt="Bedroom" loading="lazy"><div class="gal-lbl">Master bedroom</div></div>
+    <div class="gal-item"><img src="/images/nivrritii/kitchen.jpg" alt="Kitchen" loading="lazy"><div class="gal-lbl">Kitchen</div></div>
+    <div class="gal-item"><img src="/images/nivrritii/bathroom.jpeg" alt="Bathroom" loading="lazy"><div class="gal-lbl">Bathroom</div></div>
+    <div class="gal-item"><img src="/images/nivrritii/gallery-5.jpg" alt="Garden" loading="lazy"><div class="gal-lbl">Tropical Garden</div></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="wrap">
+    <div class="bk-grid">
+      <div class="rev-l">
+        <p class="tag">Reserve Your Stay</p>
+        <h2 class="h2">Book <em>NIVRRITII</em></h2>
+        <div class="gline"></div>
+        <p class="btext" style="margin-bottom:2rem;">The fastest way to book is directly on WhatsApp — instant response, confirm dates, and arrange everything in minutes.</p>
+
+        <div class="wa-block">
+          <h3>Instant Booking via WhatsApp</h3>
+          <p>Chat directly to check availability, ask questions, and confirm your dates — all in real time.</p>
+          <a href="https://wa.me/917406012727?text=Hi!%20I'd%20like%20to%20book%20Villa%20NIVRRITII%20in%20South%20Goa.%20Please%20share%20availability." target="_blank" class="wa-big">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chat on WhatsApp Now
+          </a>
+          <p class="wa-num">📞 +91 74060 12727 · Typically replies within 30 mins</p>
+        </div>
+
+        <div class="price-box">
+          <div class="price-hd">💰 Pricing at a Glance</div>
+          <div class="prow"><span>Oct – Mar (Peak)</span><span class="pamount">₹14,000 / night</span></div>
+          <div class="prow"><span>Apr – Sep (Off Season)</span><span class="pamount">₹10,000 / night</span></div>
+          <div class="prow"><span>Minimum Stay</span><span class="pamount">2 nights</span></div>
+          <div class="prow"><span>Includes</span><span class="pamount">Breakfast + Cleaning</span></div>
+        </div>
+      </div>
+
+      <div class="rev-r">
+        <div class="bk-form">
+          <h3>Or send an enquiry ✉️</h3>
+          <div class="frow">
+            <div class="fg"><label>First Name *</label><input type="text" id="firstName" placeholder="Your name"></div>
+            <div class="fg"><label>Last Name</label><input type="text" id="lastName" placeholder="Surname"></div>
+          </div>
+          <div class="fg"><label>Email *</label><input type="email" id="email" placeholder="you@email.com"></div>
+          <div class="fg"><label>Phone / WhatsApp</label><input type="tel" id="phone" placeholder="+91 98765 43210"></div>
+          <div class="frow">
+            <div class="fg"><label>Check-in *</label><input type="date" id="checkin"></div>
+            <div class="fg"><label>Check-out *</label><input type="date" id="checkout"></div>
+          </div>
+          <div class="fg">
+            <label>Guests</label>
+            <select id="guests">
+              <option>1–2 Guests</option><option>3–4 Guests</option>
+              <option>5–6 Guests</option><option>7–8 Guests</option>
+            </select>
+          </div>
+          <div class="fg"><label>Special Requests</label><textarea id="message" placeholder="Anniversary setup, airport pickup, dietary needs…"></textarea></div>
+          <div id="form-msg"></div>
+          <button class="btn-send" id="submitBtn" onclick="handleSubmit(event)">Send Enquiry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="map-g">
+    <div class="rev-l">
+      <p class="tag">Find Us</p>
+      <h2 class="h2">In the Heart of <em>South Goa</em></h2>
+      <div class="gline"></div>
+      <p class="btext">NIVRRITII sits peacefully on Palolem Agonda Road, South Goa — minutes from the most beautiful beaches in India.</p>
+      <div class="map-facts">
+        <div class="mfact"><span class="mfact-i">📍</span> Canacona, South Goa 403702</div>
+        <div class="mfact"><span class="mfact-i">📌</span> 15.032501202228671° N, 74.02073896114021° E</div>, 
+        <div class="mfact"><span class="mfact-i">🏖️</span> 3 km to Palolem Beach</div>
+        <div class="mfact"><span class="mfact-i">🌊</span> 3 km to Agonda Beach</div>
+        <div class="mfact"><span class="mfact-i">✈️</span> 50 km from Goa Airport (Dabolim)</div>
+        <div class="mfact"><span class="mfact-i">🛺</span> Auto-rickshaw & taxi easily available</div>
+      </div>
+      <a href="https://wa.me/917406012727?text=Hi!%20Can%20you%20share%20directions%20to%20Villa%20NIVRRITII?" target="_blank" class="wa-dir">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Get Directions on WhatsApp
+      </a>
+    </div>
+    <div class="map-frame rev-r">
+      <!-- Exact coordinates: 15.0337°N, 74.0233°E — Canacona, South Goa -->
+       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3853.284789136061!2d74.02100181761321!3d15.032356138620097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbe4fd9f719d23d%3A0x799e738e03bdfab5!2sNivrritii!5e0!3m2!1sen!2sin!4v1771482990675!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Villa NIVRRITII — South Goa (15.0337N, 74.0233E)"></iframe>
+      
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="ft-brand">
+      <div class="logo">NIVRRITII <span>South Goa · Luxury Villa</span></div>
+      <p>A private tropical sanctuary in the heart of South Goa. Where palm canopies, warm breezes and the sound of the ocean become your daily reality.</p>
+    </div>
+    <div class="ft-col">
+      <h5>Explore</h5>
+      <a href="#about">About the Villa</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#map-section">Location</a>
+    </div>
+    <div class="ft-col">
+      <h5>Contact</h5>
+      <a href="https://wa.me/917406012727" target="_blank">📱 +91 74060 12727</a>
+      <a href="#booking">✉️ Send Enquiry</a>
+      <a href="https://www.airbnb.co.in/rooms/1446975461633065515?guests=1&adults=1&s=67&unique_share_id=22d8f007-a5ae-40b8-a012-fa6c914a6e17" target="_blank">🏡 Airbnb Listing ↗</a>
+      <a href="https://maps.google.com/?q=15.0337,74.0233" target="_blank">📍 Get Directions</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2025 Villa NIVRRITII · Canacona, South Goa, India</span>
+    <span>Made with 🌴 for the love of Goa</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cur = document.getElementById('cursor');
+  const cr = document.getElementById('cring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx+'px'; cur.style.top = my+'px';
+  });
+  (function loop() {
+    rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+    cr.style.left = rx+'px'; cr.style.top = ry+'px';
+    requestAnimationFrame(loop);
+  })();
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', scrollY > 60);
+  });
+
+  // Mobile menu
+  function toggleMob() {
+    let m = document.getElementById('mob');
+    if (!m) {
+      m = document.createElement('div'); m.id = 'mob';
+      m.style.cssText = 'position:fixed;top:62px;left:0;right:0;z-index:499;background:rgba(13,43,26,0.98);backdrop-filter:blur(16px);padding:2rem 1.5rem;display:flex;flex-direction:column;gap:1.3rem;';
+      [['About','#about'],['Amenities','#amenities'],['Gallery','#gallery'],['Location','#map-section'],['Book Now','#booking']].forEach(([t,h]) => {
+        const a = document.createElement('a'); a.textContent=t; a.href=h;
+        a.style.cssText='color:#fefdf8;font-size:1.1rem;text-decoration:none;letter-spacing:0.06em;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0.8rem;';
+        a.onclick=()=>m.remove(); m.appendChild(a);
+      });
+      const wa=document.createElement('a');
+      wa.href='https://wa.me/917406012727'; wa.target='_blank';
+      wa.textContent='💬 WhatsApp: +91 74060 12727';
+      wa.style.cssText='color:#25D366;font-size:1rem;text-decoration:none;font-weight:500;';
+      m.appendChild(wa); document.body.appendChild(m);
+    } else { m.remove(); }
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rev,.rev-l,.rev-r').forEach(el => obs.observe(el));
+
+  // Form
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('form-msg');
+    const p = {
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      checkin: document.getElementById('checkin').value,
+      checkout: document.getElementById('checkout').value,
+      guests: document.getElementById('guests').value,
+      message: document.getElementById('message').value,
+    };
+    if (!p.firstName || !p.email || !p.checkin || !p.checkout) {
+      Object.assign(msg.style,{display:'block',background:'#fff0f0',color:'#c0392b',padding:'0.8rem 1rem',borderRadius:'6px',marginBottom:'0.8rem',fontSize:'0.85rem'});
+      msg.textContent='⚠️ Please fill in name, email, and dates.'; return;
+    }
+    btn.textContent='Sending…'; btn.disabled=true;
+    try {
+      const r = await fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});
+      const d = await r.json();
+      const ok = d.success;
+      Object.assign(msg.style,{display:'block',background:ok?'#edf7ee':'#fff0f0',color:ok?'#0d2b1a':'#c0392b',padding:'0.8rem 1rem',borderRadius:'6px',marginBottom:'0.8rem',fontSize:'0.85rem'});
+      msg.textContent=(ok?'✅ ':'❌ ')+(d.message||d.error||'Something went wrong.');
+      if(ok){btn.textContent='✓ Sent!';btn.style.background='#2d7a4a';}
+      else{btn.textContent='Send Enquiry';btn.disabled=false;}
+    } catch {
+      Object.assign(msg.style,{display:'block',background:'#fff0f0',color:'#c0392b',padding:'0.8rem 1rem',borderRadius:'6px',marginBottom:'0.8rem',fontSize:'0.85rem'});
+      msg.textContent='❌ Network error. Try WhatsApp instead!';
+      btn.textContent='Send Enquiry'; btn.disabled=false;
+    }
+  }
+</script>
+</body>
+</html>
