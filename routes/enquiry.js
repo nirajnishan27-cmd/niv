@@ -13,12 +13,16 @@ router.post('/enquiry', async (req, res) => {
   try {
     // Configure your email transport in .env
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      //service: 'gmail',
+      host: 'smtp.gmail.com', port: 465, secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS, // Use Gmail App Password
       },
     });
+
+     await transporter.verify();
+41    console.log('✅ SMTP connection verified');
 
     const nights = checkin && checkout
       ? Math.ceil((new Date(checkout) - new Date(checkin)) / 86400000)
